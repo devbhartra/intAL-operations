@@ -10,8 +10,8 @@ int main(int argc, char const *argv[]) {
 		a[i] = (char*) malloc(1001 * sizeof(char));
 	}
 	
-	strcpy(a[0], "1234512345123451234512345");
-	strcpy(a[1], "543215432154321543215432154321");
+	strcpy(a[0], "0");
+	strcpy(a[1], "0");
 	strcpy(a[2], "0");
 	strcpy(a[3], "1234512345123451234512345");
 	strcpy(a[4], "1234512345123451234512344");
@@ -25,6 +25,7 @@ int main(int argc, char const *argv[]) {
 	char *result1;
 	int index1;
 
+	/*
 	result1 = intal_add(a[0], a[1]);
 	if(!result1) {
 		printf("Test intal_add FAILED.\n");
@@ -36,15 +37,14 @@ int main(int argc, char const *argv[]) {
 		}
 		free(result1);
 	}
-
-	/*
+	*/
 	index1 = intal_compare(a[0], a[1]);
 	if(-1 == index1) {
 		printf("Test intal_compare PASSED\n");
 	} else {
 		printf("Test intal_compare FAILED.\nYour answer: %d\nExpected answer: %d\n", index1, -1);
 	}
-
+	/*
 	result1 = intal_diff(a[0], a[1]);
 	if(!result1) {
 		printf("Test intal_diff FAILED.\n");

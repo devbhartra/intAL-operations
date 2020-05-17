@@ -7,21 +7,24 @@
 static int *char2int(const char *arr, int greater, int size)
 {
     int *intArr;
-    intArr = (int *)calloc(greater+1, sizeof(int));
-    printf(" ");
+    intArr = (int *)calloc(greater + 1, sizeof(int));
+    // printf(" ");
     int start = greater - size;
     int j = 0;
-    for(int i = start; i <= greater; i++){
+    for (int i = start; i <= greater; i++)
+    {
         intArr[i] = arr[j] - '0';
         j++;
     }
     return intArr; // returns padded array in int form
 }
 
-static char *int2char(int *arr, int size){
+static char *int2char(int *arr, int size)
+{
     char *charArr;
-    charArr = (char *)malloc(size*sizeof(char));
-    for(int i = 0; i < size; i++){
+    charArr = (char *)malloc(size * sizeof(char));
+    for (int i = 0; i < size; i++)
+    {
         charArr[i] = arr[i] + '0';
     }
     return charArr;
@@ -38,8 +41,6 @@ char *intal_add(const char *intal1, const char *intal2)
     // make these a macro ->
     int greater = (size1 > size2) ? size1 : size2;
 
-    // int diff = greater - smaller; // Append these many 0s to smaller number
-
     int *intArr1;
     intArr1 = char2int(intal1, greater, size1);
     int *intArr2;
@@ -49,43 +50,83 @@ char *intal_add(const char *intal1, const char *intal2)
 
     int *sumArr;
     sumArr = (int *)calloc((greater + 1), sizeof(int)); // need to strip
-    // printf("Sumarray: ");
-    for(int i = 0; i < greater+1; i++){
-        // printf("%d", sumArr[i]);
+    printf("Sumarray: ");
+    for (int i = 0; i < greater + 1; i++)
+    {
+        printf("%d", sumArr[i]);
     }
-    // printf("\n");
-    for(int i = 0; i < greater; i++){
-        // printf("%d", intArr1[i]);
+    printf("\n");
+    for (int i = 0; i < greater; i++)
+    {
+        printf("%d", intArr1[i]);
     }
-    // printf("\n");
-    for(int i = 0; i < greater; i++){
-        // printf("%d", intArr2[i]);
+    printf("\n");
+    for (int i = 0; i < greater; i++)
+    {
+        printf("%d", intArr2[i]);
     }
-    // printf("\n");
+    printf("\n");
 
     // main adding logic
     int carry = 0;
     int sum = 0;
     int j = greater;
-    // printf("%d <--- greater\n", greater);
-    for(int i = greater-1; i >= 0; i--)
+    printf("%d <--- greater\n", greater);
+    for (int i = greater - 1; i >= 0; i--)
     {
         sum = (intArr1[i]) + (intArr2[i]) + carry;
         sumArr[j] = sum % 10;
         carry = sum / 10;
         j--;
     }
-    if(carry>0){
+    if (carry > 0)
+    {
         sumArr[0] = carry;
     }
-    for(int i = 0; i < greater+1; i++){
-        // printf("%d", sumArr[i]);
+    for (int i = 0; i < greater + 1; i++)
+    {
+        printf("%d", sumArr[i]);
     }
 
-    char *charArr = (char*)malloc(greater*sizeof(char));
-    charArr = int2char(sumArr, greater+1);
-    if(charArr[0] == '0'){
-        charArr +=1;
+    char *charArr = (char *)malloc(greater * sizeof(char));
+    charArr = int2char(sumArr, greater + 1);
+    if (charArr[0] == '0')
+    {
+        charArr += 1;
     }
     return charArr;
+}
+
+int intal_compare(const char *intal1, const char *intal2)
+{
+    int size1 = strlen(intal1);
+    int size2 = strlen(intal2);
+
+    // make these a macro ->
+    int greater = (size1 > size2) ? size1 : size2;
+
+    int *intArr1;
+    intArr1 = char2int(intal1, greater, size1);
+    int *intArr2;
+    intArr2 = char2int(intal2, greater, size2);
+    // both char intals are now int arrays
+    int flag = 0;
+    for (int i = 0; i < greater; i++)
+    {
+        if (intArr1[i] == intArr2[i])
+        {
+            continue;
+        }
+        else if (intArr1[i] > intArr2[i])
+        {
+            flag = 1;
+            break;
+        }
+        else
+        {
+            flag = -1;
+            break;
+        }
+    }
+    return flag;
 }
