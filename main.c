@@ -145,24 +145,24 @@ char *intal_multiply(const char *intal1, const char *intal2)
 }
 
 // Driver to test the above functions, remove before submission!!
-int main()
-{
-    char intal1[] = {'1', '2', '\0'};
-    char intal2[] = {'3', '7', '4', '\0'};
-    char intal3[] = {'3', '5', '\0'};
-    char intal4[] = {'3', '5', '\0'};
+// int main()
+// {
+//     char intal1[] = {'1', '2', '\0'};
+//     char intal2[] = {'3', '7', '4', '\0'};
+//     char intal3[] = {'3', '5', '\0'};
+//     char intal4[] = {'3', '5', '\0'};
 
-    char *temp1 = intal_add(intal1, intal2);
-    printf("%s", temp1);
+//     char *temp1 = intal_add(intal1, intal2);
+//     printf("%s", temp1);
 
 
-    // char *temp2 = intal_diff(intal3, intal4);
-    // printf("%s", temp2);
+//     // char *temp2 = intal_diff(intal3, intal4);
+//     // printf("%s", temp2);
 
-    // int compare = intal_compare(intal1, intal4);
-    // printf("%d", compare);
+//     // int compare = intal_compare(intal1, intal4);
+//     // printf("%d", compare);
 
-    // char *temp3 = intal_multiply(intal1, intal4);
-    // printf("%s", temp3);
-    return 0;
-}
+//     // char *temp3 = intal_multiply(intal1, intal4);
+//     // printf("%s", temp3);
+//     return 0;
+// }
