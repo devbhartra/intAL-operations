@@ -8,7 +8,7 @@ static int *char2int(const char *arr, int greater, int size)
 {
     int *intArr;
     intArr = (int *)calloc(greater+1, sizeof(int));
-    // printf(" ");
+    printf(" ");
     int start = greater - size;
     int j = 0;
     for(int i = start; i <= greater; i++){
@@ -49,33 +49,43 @@ char *intal_add(const char *intal1, const char *intal2)
 
     int *sumArr;
     sumArr = (int *)calloc((greater + 1), sizeof(int)); // need to strip
+    // printf("Sumarray: ");
     for(int i = 0; i < greater+1; i++){
-        printf("%d", sumArr[i]);
+        // printf("%d", sumArr[i]);
     }
-    printf("\n");
+    // printf("\n");
     for(int i = 0; i < greater; i++){
-        printf("%d", intArr1[i]);
+        // printf("%d", intArr1[i]);
     }
-    printf("\n");
+    // printf("\n");
     for(int i = 0; i < greater; i++){
-        printf("%d", intArr2[i]);
+        // printf("%d", intArr2[i]);
     }
-    printf("\n");
+    // printf("\n");
 
     // main adding logic
     int carry = 0;
-    int sum;
-    for(int i = greater; i >= 0; i--)
+    int sum = 0;
+    int j = greater;
+    // printf("%d <--- greater\n", greater);
+    for(int i = greater-1; i >= 0; i--)
     {
         sum = (intArr1[i]) + (intArr2[i]) + carry;
-        sumArr[i] = sum % 10;
-        carry = sumArr[i] / 10;
+        sumArr[j] = sum % 10;
+        carry = sum / 10;
+        j--;
     }
-    for(int i = 0; i < greater; i++){
-        printf("%d", sumArr[i]);
+    if(carry>0){
+        sumArr[0] = carry;
+    }
+    for(int i = 0; i < greater+1; i++){
+        // printf("%d", sumArr[i]);
     }
 
     char *charArr = (char*)malloc(greater*sizeof(char));
-    charArr = int2char(sumArr, greater);
+    charArr = int2char(sumArr, greater+1);
+    if(charArr[0] == '0'){
+        charArr +=1;
+    }
     return charArr;
 }
