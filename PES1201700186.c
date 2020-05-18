@@ -3,6 +3,8 @@
 #include <string.h>
 #include "intal.h"
 
+#define MAX(x,y) ((x>y)?x:y)
+
 // pads extra 0s and converts to int
 static int *char2int(const char *arr, int greater, int size)
 {
@@ -39,7 +41,7 @@ char *intal_add(const char *intal1, const char *intal2)
     int size2 = strlen(intal2);
 
     // make these a macro ->
-    int greater = (size1 > size2) ? size1 : size2;
+    int greater = MAX(size1,size2);
 
     int *intArr1;
     intArr1 = char2int(intal1, greater, size1);
@@ -103,7 +105,7 @@ int intal_compare(const char *intal1, const char *intal2)
     int size2 = strlen(intal2);
 
     // make these a macro ->
-    int greater = (size1 > size2) ? size1 : size2;
+    int greater = MAX(size1,size2);;
 
     int *intArr1;
     intArr1 = char2int(intal1, greater, size1);
@@ -129,4 +131,19 @@ int intal_compare(const char *intal1, const char *intal2)
         }
     }
     return flag;
+}
+
+char* intal_diff(const char* intal1, const char* intal2){
+    int size1 = strlen(intal1);
+    int size2 = strlen(intal2);
+
+    // make these a macro ->
+    int greater = MAX(size1,size2);;
+
+    int *intArr1;
+    intArr1 = char2int(intal1, greater, size1);
+    int *intArr2;
+    intArr2 = char2int(intal2, greater, size2);
+
+
 }
