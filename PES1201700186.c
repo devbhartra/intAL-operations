@@ -260,19 +260,10 @@ char *intal_multiply(const char *intal1, const char *intal2)
     int *resArray = (int *)malloc(total * sizeof(int));
     for (int i = total; i >= 0; i--)
     {
-        resArray[i] = (prodArr[i] % 10) + carry;
+        int prod = (prodArr[i]+carry) % 10;
         carry = prodArr[i] / 10;
+        resArray[i] = prod;
     }
-    // for (int i = total; i >= 0; i--)
-    // {
-    //     int digit = prodArr[i] % 10;
-    //     int carry = prodArr[i] / 10;
-    //     if ((i + 1) < total)
-    //     {
-    //         prodArr[i + 1] += carry;
-    //     }
-    //     resArray[i] += digit;
-    // }
 
     printf("\n");
     for (int i = 0; i <= total; i++)

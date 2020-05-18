@@ -10,8 +10,8 @@ int main(int argc, char const *argv[]) {
 		a[i] = (char*) malloc(1001 * sizeof(char));
 	}
 	
-	strcpy(a[0], "123");
-	strcpy(a[1], "7");
+	strcpy(a[0], "47");
+	strcpy(a[1], "91");
 	strcpy(a[2], "0");
 	strcpy(a[3], "1234512345123451234512345");
 	strcpy(a[4], "1234512345123451234512344");
