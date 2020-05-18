@@ -37,14 +37,14 @@ int main(int argc, char const *argv[]) {
 		}
 		free(result1);
 	}
-	*/
+	
 	index1 = intal_compare(a[0], a[1]);
 	if(-1 == index1) {
 		printf("Test intal_compare PASSED\n");
 	} else {
 		printf("Test intal_compare FAILED.\nYour answer: %d\nExpected answer: %d\n", index1, -1);
 	}
-	/*
+	*/
 	result1 = intal_diff(a[0], a[1]);
 	if(!result1) {
 		printf("Test intal_diff FAILED.\n");
@@ -56,7 +56,7 @@ int main(int argc, char const *argv[]) {
 		}
 		free(result1);
 	}
-
+	/*
 	result1 = intal_multiply(a[8], a[5]);
 	if(!result1) {
 		printf("Test intal_multiply FAILED.\n");

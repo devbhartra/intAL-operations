@@ -3,7 +3,7 @@
 #include <string.h>
 #include "intal.h"
 
-#define MAX(x,y) ((x>y)?x:y)
+#define MAX(x, y) ((x > y) ? x : y)
 
 // pads extra 0s and converts to int
 static int *char2int(const char *arr, int greater, int size)
@@ -40,8 +40,7 @@ char *intal_add(const char *intal1, const char *intal2)
     int size1 = strlen(intal1);
     int size2 = strlen(intal2);
 
-    // make these a macro ->
-    int greater = MAX(size1,size2);
+    int greater = MAX(size1, size2);
 
     int *intArr1;
     intArr1 = char2int(intal1, greater, size1);
@@ -51,7 +50,7 @@ char *intal_add(const char *intal1, const char *intal2)
     // both char intals are now int arrays
 
     int *sumArr;
-    sumArr = (int *)calloc((greater + 1), sizeof(int)); // need to strip
+    sumArr = (int *)calloc((greater + 1), sizeof(int)); /// need to strip
     printf("Sumarray: ");
     for (int i = 0; i < greater + 1; i++)
     {
@@ -104,8 +103,7 @@ int intal_compare(const char *intal1, const char *intal2)
     int size1 = strlen(intal1);
     int size2 = strlen(intal2);
 
-    // make these a macro ->
-    int greater = MAX(size1,size2);;
+    int greater = MAX(size1, size2);
 
     int *intArr1;
     intArr1 = char2int(intal1, greater, size1);
@@ -133,17 +131,90 @@ int intal_compare(const char *intal1, const char *intal2)
     return flag;
 }
 
-char* intal_diff(const char* intal1, const char* intal2){
+char *intal_diff(const char *intal1, const char *intal2)
+{
     int size1 = strlen(intal1);
     int size2 = strlen(intal2);
 
-    // make these a macro ->
-    int greater = MAX(size1,size2);;
+    int greater = MAX(size1, size2);
+    printf("%d <-- greater\n", greater);
 
     int *intArr1;
     intArr1 = char2int(intal1, greater, size1);
     int *intArr2;
     intArr2 = char2int(intal2, greater, size2);
 
+    // both char intals are now int arrays
 
+    int *diffArr;
+    diffArr = (int *)calloc((greater), sizeof(int)); // need to strip
+    printf("Diffarray: ");
+    for (int i = 0; i < greater; i++)
+    {
+        printf("%d", diffArr[i]);
+    }
+    printf("\n");
+    for (int i = 0; i < greater; i++)
+    {
+        printf("%d", intArr1[i]);
+    }
+    printf("\n");
+    for (int i = 0; i < greater; i++)
+    {
+        printf("%d", intArr2[i]);
+    }
+    printf("\n");
+
+    // main difference logic
+    int diff = 0;
+
+    // find bigger number:
+    int comp = intal_compare(intal1,intal2);
+
+    if (comp == 1)
+    {
+        for (int i = greater - 1; i >= 0; i--)
+        {
+            diff = intArr1[i] - intArr2[i];
+            if (diff < 0)
+            {
+                intArr1[i] += 10;
+                intArr1[i - 1] -= 1;
+                diff = intArr1[i] - intArr2[i];
+            }
+            diffArr[i] = diff;
+        }
+    }
+    // both are equal
+    else if(comp == 0){
+        diffArr[0] = 0;
+    }
+    // intal2 is greater
+    else
+    {
+        for (int i = greater - 1; i >= 0; i--)
+        {
+            diff = intArr2[i] - intArr1[i];
+            if (diff < 0)
+            {
+                intArr2[i] += 10;
+                intArr2[i - 1] -= 1;
+                diff = intArr2[i] - intArr1[i];
+            }
+            diffArr[i] = diff;
+        }
+    }
+    for (int i = 0; i < greater + 1; i++)
+    {
+        printf("%d", diffArr[i]);
+    }
+
+    char *charArr = (char *)malloc(greater * sizeof(char));
+    charArr = int2char(diffArr, greater);
+    if (strlen(charArr) > 0 && charArr[0] == '0')
+    {
+        charArr += 1;
+    }
+    return charArr;
+    // return diffArr;
 }
