@@ -29,8 +29,8 @@ int main(int argc, char const *argv[])
 	// strcpy(a[13], "7");
 
 	char *result1;
-	/*
 	int index1;
+	/*
 
 	result1 = intal_add(a[10], a[11]);
 	if(!result1) {
@@ -211,7 +211,7 @@ int main(int argc, char const *argv[])
 		}
 		free(result1);
 	}
-	*/
+
 	result1 = intal_bincoeff(10, 8);
 	if(!result1) {
 		printf("Test intal_bincoeff FAILED.\n");
@@ -223,7 +223,7 @@ int main(int argc, char const *argv[])
 		}
 		free(result1);
 	}
-	/*
+
 	index1 = intal_max(a, 10);
 	if(6 == index1) {
 		printf("Test intal_max PASSED\n");
@@ -237,14 +237,14 @@ int main(int argc, char const *argv[])
 	} else {
 		printf("Test intal_min FAILED.\nYour answer: %d\nExpected answer: %d\n", index1, 2);
 	}
-
+	*/
 	index1 = intal_search(a, 10, a[7]);
 	if(6 == index1) {
 		printf("Test intal_search PASSED\n");
 	} else {
 		printf("Test intal_search FAILED.\nYour answer: %d\nExpected answer: %d\n", index1, 6);
 	}
-
+	/*
 	intal_sort(a, 10);
 	index1 = intal_binsearch(a, 10, "3");
 	if(1 == index1) {

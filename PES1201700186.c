@@ -6,8 +6,9 @@
 #define MAX(x, y) ((x > y) ? x : y)
 #define MAXIMUM 1001
 
-static int getMin(unsigned int a, unsigned int b){
-    return (a>=b) ? b : a;
+static int getMin(unsigned int a, unsigned int b)
+{
+    return (a >= b) ? b : a;
 }
 
 void swap(char *a, char *b)
@@ -379,7 +380,6 @@ char *intal_bincoeff(unsigned int n, unsigned int k)
         {
             t = intal_add(array[j], array[j - 1]);
             strcpy(array[j], t);
-            // free(t);
         }
     }
 
@@ -390,4 +390,51 @@ char *intal_bincoeff(unsigned int n, unsigned int k)
     }
     free(array);
     return res;
+}
+
+int intal_max(char **arr, int n)
+{
+    char *max = (char *)malloc(MAXIMUM * sizeof(char));
+    // assuming the 1st intal to be the max
+    strcpy(max, arr[0]);
+    int pos = 0;
+    // start loop from next element
+    for (int i = 1; i < n; i++)
+    {
+        if (intal_compare(arr[i], max) == 1){
+            strcpy(max, arr[i]);
+            pos = i;
+        } // the number is greater, need to swap
+    }
+    return pos;
+}
+
+int intal_min(char **arr, int n){
+    char *min = (char *)malloc(MAXIMUM * sizeof(char));
+    // assuming the 1st intal to be the max
+    strcpy(min, arr[0]);
+    int pos = 0;
+    // start loop from next element
+    for (int i = 1; i < n; i++)
+    {
+        if (intal_compare(arr[i], min) == -1){
+            strcpy(min, arr[i]);
+            pos = i;
+        } // the number is greater, need to swap
+    }
+    return pos;
+}
+
+int intal_search(char **arr, int n, const char* key){
+    int pos = -1;
+    char *intalKey = (char *)malloc(MAXIMUM * sizeof(char));
+    strcpy(intalKey, key);
+    for(int i = 0; i < n; i++){
+        if(intal_compare(intalKey,arr[i]) == 0){
+            pos = i;
+            break;
+        }
+    }
+    return pos;
+
 }
