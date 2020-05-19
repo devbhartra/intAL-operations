@@ -3,13 +3,15 @@
 #include <string.h>
 #include "intal.h"
 
-int main(int argc, char const *argv[]) {
+int main(int argc, char const *argv[])
+{
 	int n = 12;
-	char **a = (char**) malloc(n * sizeof(char*));
-	for(int i = 0; i < n; i++) {
-		a[i] = (char*) malloc(1001 * sizeof(char));
+	char **a = (char **)malloc(n * sizeof(char *));
+	for (int i = 0; i < n; i++)
+	{
+		a[i] = (char *)malloc(1001 * sizeof(char));
 	}
-	
+
 	strcpy(a[0], "999");
 	strcpy(a[1], "9");
 	strcpy(a[2], "0");
@@ -30,7 +32,7 @@ int main(int argc, char const *argv[]) {
 	/*
 	int index1;
 
-	result1 = intal_add(a[0], a[1]);
+	result1 = intal_add(a[10], a[11]);
 	if(!result1) {
 		printf("Test intal_add FAILED.\n");
 	} else {
@@ -60,7 +62,7 @@ int main(int argc, char const *argv[]) {
 		}
 		free(result1);
 	}
-	*/
+	
 	result1 = intal_multiply(a[0], a[1]);
 	if(!result1) {
 		printf("Test intal_multiply FAILED.\n");
@@ -73,7 +75,6 @@ int main(int argc, char const *argv[]) {
 		free(result1);
 	}
 
-	/*
 	result1 = intal_mod(a[3], a[4]);
 	if(!result1) {
 		printf("Test intal_mod FAILED.\n");
@@ -121,19 +122,23 @@ int main(int argc, char const *argv[]) {
 		}
 		free(result1);
 	}
-
 	result1 = intal_pow("10", 999);
-	if(!result1) {
+	if (!result1)
+	{
 		printf("Test intal_pow FAILED.\n");
-	} else {
-		if(0 == strcmp(result1, a[10])) {
+	}
+	else
+	{
+		if (0 == strcmp(result1, a[10]))
+		{
 			printf("Test intal_pow PASSED\n");
-		} else {
+		}
+		else
+		{
 			printf("Test intal_pow FAILED.\nYour answer: %s\nExpected answer: %s\n", result1, a[10]);
 		}
 		free(result1);
 	}
-
 	result1 = intal_pow("2", 3000);
 	if(!result1) {
 		printf("Test intal_pow FAILED.\n");
@@ -157,8 +162,8 @@ int main(int argc, char const *argv[]) {
 		}
 		free(result1);
 	}
-
-	result1 = intal_fibonacci(3);
+	*/
+	result1 = intal_fibonacci(250);
 	if(!result1) {
 		printf("Test intal_fibonacci FAILED.\n");
 	} else {
@@ -169,6 +174,7 @@ int main(int argc, char const *argv[]) {
 		}
 		free(result1);
 	}
+	
 
 	result1 = intal_fibonacci(1000);
 	if(!result1) {
@@ -182,6 +188,7 @@ int main(int argc, char const *argv[]) {
 		free(result1);
 	}
 
+	/*
 	result1 = intal_factorial(30);
 	if(!result1) {
 		printf("Test intal_factorial FAILED.\n");
