@@ -264,6 +264,7 @@ char *intal_pow(const char *intal1, unsigned int n)
     }
 }
 
+/*
 char *intal_fibonacci(unsigned int n)
 {
     char *prev_2, *prev_1, *res, *t;
@@ -299,3 +300,61 @@ char *intal_fibonacci(unsigned int n)
 
     return res;
 }
+
+char* intal_mod(const char* intal1, const char* intal2){
+
+}
+
+char* intal_gcd(const char* intal1, const char* intal2){
+    // if both are 0, return 0
+    if(strcmp(intal1, "0") && strcmp(intal2, "0")){
+        char* temp = (char*)malloc(1 * sizeof(char));
+        strcpy(temp, "0");
+        return(temp);
+    }
+
+}
+*/
+
+char *intal_factorial(unsigned int n)
+{
+    if (n == 0 || n == 1)
+    {
+        char *res = (char *)malloc(1 * sizeof(char));
+        strcpy(res, "1");
+        return res;
+    }
+    int i = 2;
+    char *t1, *t2, *res, *add_one, *next_num;
+
+    //a constant '1' to add to the previous number, to obtain next intal number
+    add_one = (char *)malloc(sizeof(char) * 2);
+    strcpy(add_one, "1\0");
+
+    //the next number to be multiplied in to the resulting factorial
+    next_num = (char *)malloc(sizeof(char) * 2);
+    strcpy(next_num, "1\0");
+
+    //actual factorial result over the n iterations
+    res = (char *)malloc(sizeof(char) * 2);
+    strcpy(res, "1\0");
+
+    while (i <= n)
+    {
+        t1 = intal_add(next_num, add_one);
+        t2 = next_num;
+        next_num = t1;
+
+        t1 = intal_multiply(res, next_num);
+        t2 = res;
+        res = t1;
+
+        i += 1;
+    }
+
+    return res;
+}
+
+
+
+
