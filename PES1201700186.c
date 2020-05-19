@@ -6,6 +6,22 @@
 #define MAX(x, y) ((x > y) ? x : y)
 #define MAXIMUM 1001
 
+static int custom_binSearch(char **arr, int l, int r, char *key){
+    if(r-l+1 < 1){
+        return -1;
+    }
+    int m = (l+r)/2;
+
+    if(intal_compare(key,arr[m])==0)
+        return m;
+
+    else if(intal_compare(key,arr[m])==-1)
+        return custom_binSearch(arr, l, m-1, key);
+    
+    else
+        return custom_binSearch(arr, m+1, r, key);
+}
+
 static int getMin(unsigned int a, unsigned int b)
 {
     return (a >= b) ? b : a;
@@ -436,5 +452,17 @@ int intal_search(char **arr, int n, const char* key){
         }
     }
     return pos;
-
 }
+
+int intal_binsearch(char **arr, int n, const char* key){
+    char *k = (char*)malloc(sizeof(char)*MAXIMUM);
+    strcpy(k,key);
+    int res;
+    res = custom_binSearch(arr, 0, n, k);
+    free(k);
+    return res;
+}
+
+
+//binary search helper function, actual binary search logic
+
