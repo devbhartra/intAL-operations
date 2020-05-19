@@ -4,6 +4,11 @@
 #include "intal.h"
 
 #define MAX(x, y) ((x > y) ? x : y)
+#define MAXIMUM 1001
+
+static int getMin(unsigned int a, unsigned int b){
+    return (a>=b) ? b : a;
+}
 
 void swap(char *a, char *b)
 {
@@ -355,6 +360,34 @@ char *intal_factorial(unsigned int n)
     return res;
 }
 
+char *intal_bincoeff(unsigned int n, unsigned int k)
+{
+    char **array = (char **)malloc(sizeof(char *) * (k + 1));
+    //array of size k, initally all values 0
+    for (int i = 0; i <= k; i++)
+    {
+        array[i] = (char *)malloc(sizeof(char *) * MAXIMUM);
+        strcpy(array[i], "0");
+    }
+    strcpy(array[0], "1"); //C(n,0) = 1
 
+    char *t, *res;
 
+    for (int i = 1; i <= n; i++)
+    {
+        for (int j = getMin(i, k); j > 0; j--)
+        {
+            t = intal_add(array[j], array[j - 1]);
+            strcpy(array[j], t);
+            // free(t);
+        }
+    }
 
+    res = strdup(array[k]);
+    for (int i = 0; i <= k; i++)
+    {
+        free(array[i]);
+    }
+    free(array);
+    return res;
+}
