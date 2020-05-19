@@ -9,7 +9,7 @@
 static int *char2int(const char *arr, int greater, int size)
 {
     int *intArr;
-    intArr = (int *)calloc(greater + 1, sizeof(int));
+    intArr = (int *)calloc(greater, sizeof(int));
     // printf(" ");
     int start = greater - size;
     int j = 0;
@@ -217,9 +217,9 @@ char *intal_diff(const char *intal1, const char *intal2)
     // return diffArr;
 }
 
+/*
 char *intal_multiply(const char *intal1, const char *intal2)
 {
-
     int size1 = strlen(intal1);
     int size2 = strlen(intal2);
 
@@ -230,53 +230,91 @@ char *intal_multiply(const char *intal1, const char *intal2)
     int *intArr2;
     intArr2 = char2int(intal2, greater, size2);
 
-    int total = size2 + size1;
-    int *prodArr;
-    prodArr = (int *)malloc(total * sizeof(int)); // need to strip
-
-    // both char intals are now int arrays
-    int carry = 0;
-    // int x = total - 1;
-    // int shift = 0;
-    // int prod;
-
-    // intal1 is bigger
-    // if (greater == size1)
+    // printf("Num1--->  ");
+    // for (int i = 0; i < greater; i++)
     // {
-    // int limit = greater - size2;
+    //     printf("%d ", intArr1[i]);
+    // }
+    // printf("\n");
+
+    // printf("Num2--->  ");
+    // for (int i = 0; i < greater; i++)
+    // {
+    //     printf("%d ", intArr2[i]);
+    // }
+    // printf("\n");
+
+    int total = size2 + size1;
+    // printf("Total num --> %d \n", total);
+    int *prodArr;
+    prodArr = (int *)malloc((total) * sizeof(int)); // need to strip
+
+    printf("prodArr elements--->  ");
     for (int i = greater - 1; i >= 0; i--) // the number below (intArr2)
     {
         for (int j = greater - 1; j >= 0; j--)
         { // the number on top (intArr1)
             prodArr[i + j] = prodArr[i + j] + (intArr2[i] * intArr1[j]);
+            printf("%d ", prodArr[i+j]);
         }
     }
-    // }
-    for (int i = 0; i <= total; i++)
+    printf("\n");
+    printf("Final prodarray--->   ");
+    for (int i = total - 1; i >= 0; i--)
     {
         printf("%d ", prodArr[i]);
     }
+    printf("\n");
 
+    int carry = 0;
     int *resArray = (int *)malloc(total * sizeof(int));
-    for (int i = total; i >= 0; i--)
+    for (int i = total-1; i >= 0; i--)
     {
-        int prod = (prodArr[i]+carry) % 10;
+        int prod = (prodArr[i] + carry) % 10;
         carry = prodArr[i] / 10;
         resArray[i] = prod;
     }
 
     printf("\n");
+    printf("Resarr--->  ");
     for (int i = 0; i <= total; i++)
     {
         printf("%d ", resArray[i]);
     }
     printf("\n");
 
-    // char *charArr = (char *)malloc(greater * sizeof(char));
-    // charArr = int2char(prodArr, greater);
+    char *charArr = (char *)malloc(total * sizeof(char));
+    charArr = int2char(resArray, greater);
     // if (strlen(charArr) > 0 && charArr[0] == '0')
     // {
     //     charArr += 1;
     // }
-    return " ";
+    return charArr;
+}
+*/
+
+char *intal_multiply(const char *intal1, const char *intal2){
+
+    int len1 = strlen(intal1);
+    int len2 = strlen(intal2);
+    int len  = len1 + len2;
+    int *arr = (int*)malloc(sizeof(int)*len); //the number of digits of the result - len is the top;
+    memset(arr, 0, sizeof(int)*len); //this is critical;
+    for(int i=len1-1; i > -1; i--)
+        for(int j=len2-1; j > -1; j--)
+            arr[i+j+1] += (intal1[i]-'0')*(intal2[j]-'0'); //collect result of each position;
+    for(int i=len-1; i > 0; i--) //restore the carry for each position and get the final result;
+    {
+        arr[i-1] += arr[i]/10;
+        arr[i] %= 10;
+    }
+    char *s = (char*)malloc(sizeof(char)*(len+1)); //converting the digits result to string;
+    int index = 0;
+    int i = 0;
+    if(arr[i]==0) i++; //in case the zero position has no carry, if it does, ignore it;
+    while(i < len)
+        s[index++] = arr[i++]+'0';
+    s[index] = '\0';
+    return s;
+
 }

@@ -10,8 +10,8 @@ int main(int argc, char const *argv[]) {
 		a[i] = (char*) malloc(1001 * sizeof(char));
 	}
 	
-	strcpy(a[0], "47");
-	strcpy(a[1], "91");
+	strcpy(a[0], "999");
+	strcpy(a[1], "9");
 	strcpy(a[2], "0");
 	strcpy(a[3], "1234512345123451234512345");
 	strcpy(a[4], "1234512345123451234512344");
@@ -27,9 +27,9 @@ int main(int argc, char const *argv[]) {
 	// strcpy(a[13], "7");
 
 	char *result1;
+	/*
 	int index1;
 
-	/*
 	result1 = intal_add(a[0], a[1]);
 	if(!result1) {
 		printf("Test intal_add FAILED.\n");
