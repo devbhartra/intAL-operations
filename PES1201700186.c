@@ -30,6 +30,32 @@ static int *char2int(const char *arr, int greater, int size)
 	return intArr; // returns padded array in int form
 }
 
+static char *coinHelper(char **inputArr, char **tableArr, int n)
+{
+	char *temporary, *currentNumber, *prevNum;
+	if (n < 0)
+		return "0";
+	else if (n == 0)
+	{
+		tableArr[0] = inputArr[0];
+		return tableArr[0];
+	}
+	temporary = coinHelper(inputArr, tableArr, n - 2);
+	currentNumber = intal_add(temporary, inputArr[n]);
+	prevNum = coinHelper(inputArr, tableArr, n - 1);
+
+	int result = intal_compare(currentNumber, prevNum);
+	if (result >= 0)
+	{
+		tableArr[n] = currentNumber;
+	}
+	else
+	{
+		tableArr[n] = prevNum;
+	}
+	return tableArr[n];
+}
+
 static char *int2char(int *arr, int size)
 {
 	char *charArr;
@@ -54,7 +80,7 @@ static int product(int x, int *resultant, int size)
 		carry = digit / 10;
 	}
 
-	while (carry)
+	while (carry > 0)
 	{
 		resultant[size] = carry % 10;
 		carry = carry / 10;
@@ -62,6 +88,48 @@ static int product(int x, int *resultant, int size)
 	}
 
 	return size;
+}
+
+// needed for intal sort
+static int partition(char **arr, int l, int r)
+{
+	char *midElement = malloc(10001);
+	strcpy(midElement, arr[r]);
+	int i = l - 1;
+	for (int j = l; j <= r - 1; j++)
+	{
+		if (intal_compare(arr[j], midElement) == -1)
+		{
+			i = i + 1;
+			char *temp = malloc(10001);
+
+			strcpy(temp, arr[i]);
+			strcpy(arr[i], arr[j]);
+			strcpy(arr[j], temp);
+			free(temp);
+		}
+	}
+	char *temp2 = malloc(10001);
+
+	strcpy(temp2, arr[i + 1]);
+	strcpy(arr[i + 1], arr[r]);
+	strcpy(arr[r], temp2);
+
+	i++;
+	free(midElement);
+	free(temp2);
+	return (i);
+}
+
+// needed for intal sort
+static void qSorting(char **arr, int l, int r)
+{
+	if (l < r)
+	{
+		int partitioning = partition(arr, l, r);
+		qSorting(arr, l, partitioning - 1);
+		qSorting(arr, partitioning + 1, r);
+	}
 }
 
 char *intal_add(const char *intal1, const char *intal2)
@@ -243,21 +311,21 @@ char *intal_multiply(const char *intal1, const char *intal2)
 	int size1 = strlen(intal1);
 	int size2 = strlen(intal2);
 	int len = size1 + size2;
-	int *arr = (int *)malloc(sizeof(int) * len); //the number of digits of the result - len is the top;
+	int *arr = (int *)malloc(sizeof(int) * len); 
 	memset(arr, 0, sizeof(int) * len);
 	for (int i = size1 - 1; i > -1; i--)
 		for (int j = size2 - 1; j > -1; j--)
-			arr[i + j + 1] += (intal1[i] - '0') * (intal2[j] - '0'); //collect result of each position;
-	for (int i = len - 1; i > 0; i--)								 //restore the carry for each position and get the final result;
+			arr[i + j + 1] += (intal1[i] - '0') * (intal2[j] - '0'); 
+	for (int i = len - 1; i > 0; i--)								
 	{
 		arr[i - 1] += arr[i] / 10;
 		arr[i] %= 10;
 	}
-	char *s = (char *)malloc(sizeof(char) * (len + 1)); //converting the digits result to string;
+	char *s = (char *)malloc(sizeof(char) * (len + 1));
 	int index = 0;
 	int i = 0;
 	if (arr[i] == 0)
-		i++; //in case the zero position has no carry, if it does, ignore it;
+		i++; 
 	while (i < len)
 		s[index++] = arr[i++] + '0';
 	s[index] = '\0';
@@ -349,8 +417,9 @@ int intal_search(char **arr, int n, const char *key)
 
 char *intal_factorial(unsigned int n)
 {
-	if(n == 0 || n == 1){
-		char *temp = (char*)calloc(sizeof(char), 1);
+	if (n == 0 || n == 1)
+	{
+		char *temp = (char *)calloc(sizeof(char), 1);
 		strcpy(temp, "1");
 		return temp;
 	}
@@ -368,135 +437,57 @@ char *intal_factorial(unsigned int n)
 		result[count] = tempArr[i] + '0';
 		count++;
 	}
-	
+
 	free(tempArr);
 	return result;
 }
 
-int intal_binsearch(char **arr, int n, const char *key)
+static int binSearchHelp(char **arr, int l, int r, char *key)
 {
-	char *k = (char *)malloc(sizeof(char) * MAXIMUM);
-	strcpy(k, key);
-	int res;
-	res = custom_binSearch(arr, 0, n, k);
-	free(k);
-	return res;
-}
-
-//binary search helper function, actual binary search logic
-int custom_binSearch(char **arr, int l, int r, char *key)
-{
-	if (r - l + 1 < 1)
+	int temp = r - l + 1;
+	if (temp < 1)
 	{
 		return -1;
 	}
-	int m = (l + r) / 2;
+	int midElement = (l + r) / 2;
 
-	if (intal_compare(key, arr[m]) == 0)
-		return m;
+	if (intal_compare(key, arr[midElement]) == 0)
+		return midElement;
 
-	else if (intal_compare(key, arr[m]) == -1)
-		return custom_binSearch(arr, l, m - 1, key);
+	else if (intal_compare(key, arr[midElement]) == -1)
+		return binSearchHelp(arr, l, midElement - 1, key);
 
 	else
-		return custom_binSearch(arr, m + 1, r, key);
+		return binSearchHelp(arr, midElement + 1, r, key);
 }
 
-int partition(char **arr, int low, int high)
+int intal_binsearch(char **arr, int n, const char *key)
 {
-	char *pivot = malloc(10000);
-	strcpy(pivot, arr[high]);
-	//printf("%s\n", pivot);
-	int i = low - 1;
-
-	for (int j = low; j <= high - 1; j++)
-	{
-		//printf("%d\n", intal_compare(arr[j],pivot));
-		if (intal_compare(arr[j], pivot) == -1)
-		{
-			i = i + 1;
-			//printf("%s\n", arr[i]);
-			char *temp = malloc(10000);
-			temp = arr[i];
-			arr[i] = arr[j];
-			arr[j] = temp;
-
-			//swap(arr[i],arr[j]);
-			//printf("%s\n", arr[j]);
-		}
-	}
-	char *temp2 = malloc(10000);
-	//char *temp = malloc(1000);
-	temp2 = arr[i + 1];
-	arr[i + 1] = arr[high];
-	arr[high] = temp2;
-	//swap(arr[i+1],arr[high]);
-	return (i + 1);
-}
-
-void quick_sort(char **arr, int low, int high)
-{
-	if (low < high)
-	{
-		int pi = partition(arr, low, high);
-		quick_sort(arr, low, pi - 1);
-		quick_sort(arr, pi + 1, high);
-	}
+	char *charArr = (char *)malloc(sizeof(char) * 1001);
+	strcpy(charArr, key);
+	int result = -1;
+	result = binSearchHelp(arr, 0, n, charArr);
+	free(charArr);
+	return result;
 }
 
 void intal_sort(char **arr, int n)
 {
-	quick_sort(arr, 0, n - 1);
+	qSorting(arr, 0, n - 1);
 }
 
-// no need to sort
+
 char *coin_row_problem(char **arr, int n)
 {
-	// array to store the DP 'array(table)'
-	char **tableArr = (char **)malloc((n + 1) * sizeof(char)); // extra 1 to account for 0 in the beginning
-	if (n == 1)
+	char **tableArr = (char **)malloc(sizeof(char *) * n);
+	for (int i = 0; i < n; i++)
 	{
-		return arr[0];
+		tableArr[i] = (char *)malloc(sizeof(char) * MAXIMUM);
+		strcpy(tableArr[i], "0");
 	}
-	if (n == 2)
-	{
-		// return MAX(arr[0], arr[1]);
-		int flag = intal_compare(arr[0], arr[1]);
-		if (flag == 1 || flag == 0)
-			return arr[0];
-		else
-			return arr[1];
-	}
-	// for more than 3 values:
-	tableArr[0] = "0";
-	// strcpy(tableArr[0], "0");
-	// printf("%s <-----\n", tableArr[0]);
-
-	tableArr[1] = arr[0];
-	// printf("%s <-----\n", tableArr[1]);
-
-	// strcpy(tableArr[1], arr[0]);
-	for (int i = 1; i < n; i++)
-	{
-		char *sum;
-		sum = intal_add(arr[i], tableArr[i - 1]);
-		int flag = intal_compare(sum, tableArr[i]);
-		// printf("%d", flag);
-		if (flag == 1 || flag == 0)
-		{
-			tableArr[i + 1] = sum;
-			// strcpy(tableArr[i + 1], sum);
-		}
-		else
-			tableArr[i + 1] = tableArr[i];
-		// free(sum);
-	}
-
-	char *result = (char *)malloc(sizeof(char) * 1001);
-	strcpy(result, tableArr[n]);
-	free(tableArr);
-	return result;
-	// return "0";
+	char *res = (char *)malloc(sizeof(char) * MAXIMUM);
+	strcpy(res, coinHelper(arr, tableArr, n - 1));
+	return res;
 }
 
 void swap(char *a, char *b)
@@ -508,75 +499,6 @@ void swap(char *a, char *b)
 	strcpy(b, temp);
 }
 
-char *reverse(char *a)
-{
-	int x = strlen(a);
-	char *final_result = malloc(10000);
-	int k = 0;
-	for (int i = x - 1; i >= 0; i--)
-	{
-		final_result[k] = a[i];
-		//printf("%c\n", a[i]);
-		k = k + 1;
-	}
-
-	//printf("%s\n", final_result);
-
-	return final_result;
-}
-
-char *tempadd(const char *intal1, const char *intal2)
-{
-
-	char *temp1 = malloc(10000);
-	char *temp2 = malloc(10000);
-
-	strcpy(temp1, intal1);
-	strcpy(temp2, intal2);
-
-	char *result = malloc(10000);
-
-	if (strlen(temp1) > strlen(temp2))
-		swap(temp1, temp2);
-	int n1 = strlen(temp1);
-	int n2 = strlen(temp2);
-
-	char *actual1 = malloc(10000);
-	char *actual2 = malloc(10000);
-
-	strcpy(actual1, reverse(temp1));
-	strcpy(actual2, reverse(temp2));
-
-	int carry = 0;
-	int count = 0;
-	for (int i = 0; i < n1; i++)
-	{
-		int sum = (actual1[i] - '0') + (actual2[i] - '0') + carry;
-		result[count] = sum % 10 + '0';
-		count = count + 1;
-		carry = sum / 10;
-	}
-
-	for (int i = n1; i < n2; i++)
-	{
-		int sum = (actual2[i] - '0') + carry;
-		result[count] = sum % 10 + '0';
-		count = count + 1;
-		carry = sum / 10;
-	}
-
-	if (carry)
-	{
-		result[count] = carry + '0';
-		count = count + 1;
-	}
-
-	//printf("%s\n", result);
-	char *final_result = malloc(10000);
-	strcpy(final_result, reverse(result));
-	//printf("%s\n", final_result);
-	return final_result;
-}
 char *intal_fibonacci(unsigned int n)
 {
 	char *a = (char *)malloc(sizeof(char) * 2);
@@ -594,7 +516,7 @@ char *intal_fibonacci(unsigned int n)
 	while (i <= n)
 	{
 
-		res = tempadd(a, b);
+		res = intal_add(a, b);
 		// printf("%s<------res\n", res);
 		temp = a;
 		a = b;
