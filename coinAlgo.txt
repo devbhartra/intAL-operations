@@ -1,0 +1,23 @@
+char *coin_row_problem(char **arr, int n)
+{
+	char **F = (char **)malloc(sizeof(char) * (n + 1));
+	for (int i = 0; i < (n + 1); i++)
+	{
+		F[i] = (char *)malloc(sizeof(char) * 1001);
+		strcpy(F[i], "0");
+	}
+	// for(int i = 0; i < n+1; i++){
+	// 	printf("%s\n", F[i]);
+	// }
+	// F[0] = "0";
+	strcpy(F[0], "0");
+	// F[1] = arr[1];
+	strcpy(F[1],arr[1]);
+	for (int i = 2; i <= n; i++)
+	{
+		int temp = intal_compare(intal_add(arr[i], F[i - 2]), F[i - 1]);
+		strcpy(F[i], temp)
+		printf("%s\n", F[i]);
+	}
+	return F[n-1];
+}

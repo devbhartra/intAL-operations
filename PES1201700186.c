@@ -7,12 +7,6 @@
 #define MIN(x, y) ((x < y) ? x : y)
 #define MAXIMUM 1001
 #define ISEVEN(n) ((n % 2 == 0) ? 1 : 0)
-// #define ISODD(n) ((n % 2 != 0) ? 1 : 0)
-
-// static int min(unsigned int a, unsigned int b)
-// {
-// 	return (a < b) ? a : b;
-// }
 
 // pads extra 0s and converts to int
 static int *char2int(const char *arr, int greater, int size)
