@@ -146,6 +146,7 @@ int main(int argc, char const *argv[])
 	}
 
 	result1 = intal_pow(a[5], 3);
+	// printf("\n%d <----\n", strlen(result1));
 	if (!result1)
 	{
 		printf("Test intal_pow FAILED.\n");

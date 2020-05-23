@@ -3,10 +3,23 @@
 #include <string.h>
 #include "intal.h"
 
+// Dev Bhartra
+// PES1201700186
+
 #define MAX(x, y) ((x > y) ? x : y)
 #define MIN(x, y) ((x < y) ? x : y)
 #define MAXIMUM 1001
 #define ISEVEN(n) ((n % 2 == 0) ? 1 : 0)
+
+
+static void swap(char *a, char *b)
+{
+
+	char *temp = malloc(1000 * sizeof(char));
+	strcpy(temp, a);
+	strcpy(a, b);
+	strcpy(b, temp);
+}
 
 // pads extra 0s and converts to int
 static int *char2int(const char *arr, int greater, int size)
@@ -22,6 +35,38 @@ static int *char2int(const char *arr, int greater, int size)
 		j++;
 	}
 	return intArr; // returns padded array in int form
+}
+
+static char *gcdHelper(char *temp1, char *temp2)
+{
+	if (strcmp(temp2, "0") == 0)
+	{
+		char *result = strdup(temp1);
+		return result;
+	}
+	char *mod, *temp;
+	mod = intal_mod(temp1, temp2);
+	temp = gcdHelper(temp2, mod);
+	return temp;
+}
+
+static int binSearchHelp(char **arr, int l, int r, char *key)
+{
+	int temp = r - l + 1;
+	if (temp < 1)
+	{
+		return -1;
+	}
+	int midElement = (l + r) / 2;
+
+	if (intal_compare(key, arr[midElement]) == 0)
+		return midElement;
+
+	else if (intal_compare(key, arr[midElement]) == -1)
+		return binSearchHelp(arr, l, midElement - 1, key);
+
+	else
+		return binSearchHelp(arr, midElement + 1, r, key);
 }
 
 static char *coinHelper(char **inputArr, char **tableArr, int n)
@@ -171,6 +216,7 @@ char *intal_add(const char *intal1, const char *intal2)
 
 	free(intArr1);
 	free(intArr2);
+	free(sumArr);
 	return result;
 }
 
@@ -287,9 +333,9 @@ char *intal_diff(const char *intal1, const char *intal2)
 	{
 		charArr += count;
 	}
+	free(diffArr);
 	// free(intArr2);
 	// free(intArr1);
-	// free(diffArr);
 	// charArr[greater] = '\0';
 	return charArr;
 }
@@ -342,7 +388,7 @@ char *intal_pow(const char *intal1, unsigned int n)
 	{
 		resArr = intal_multiply(temp, temp);
 		strcpy(temp, resArr);
-		// free(temp);
+		free(resArr);
 		return temp;
 	}
 	else
@@ -350,7 +396,6 @@ char *intal_pow(const char *intal1, unsigned int n)
 		temp = intal_multiply(temp, temp);
 		resArr = intal_multiply(intal1, temp);
 		strcpy(temp, resArr);
-		// free(temp);
 		free(resArr);
 		return temp;
 	}
@@ -371,6 +416,7 @@ int intal_max(char **arr, int n)
 			pos = i;
 		} // the number is greater, need to swap
 	}
+	free(max);
 	return pos;
 }
 
@@ -389,6 +435,7 @@ int intal_min(char **arr, int n)
 			pos = i;
 		} // the number is greater, need to swap
 	}
+	free(min);
 	return pos;
 }
 
@@ -436,25 +483,6 @@ char *intal_factorial(unsigned int n)
 	return result;
 }
 
-static int binSearchHelp(char **arr, int l, int r, char *key)
-{
-	int temp = r - l + 1;
-	if (temp < 1)
-	{
-		return -1;
-	}
-	int midElement = (l + r) / 2;
-
-	if (intal_compare(key, arr[midElement]) == 0)
-		return midElement;
-
-	else if (intal_compare(key, arr[midElement]) == -1)
-		return binSearchHelp(arr, l, midElement - 1, key);
-
-	else
-		return binSearchHelp(arr, midElement + 1, r, key);
-}
-
 int intal_binsearch(char **arr, int n, const char *key)
 {
 	char *charArr = (char *)malloc(sizeof(char) * 1001);
@@ -482,15 +510,6 @@ char *coin_row_problem(char **arr, int n)
 	char *res = (char *)malloc(sizeof(char) * MAXIMUM);
 	strcpy(res, coinHelper(arr, tableArr, n - 1));
 	return res;
-}
-
-void swap(char *a, char *b)
-{
-
-	char *temp = malloc(1000 * sizeof(char));
-	strcpy(temp, a);
-	strcpy(a, b);
-	strcpy(b, temp);
 }
 
 char *intal_fibonacci(unsigned int n)
@@ -574,8 +593,8 @@ char *intal_mod(const char *intal1, const char *intal2)
 		numer = temp1;
 		if (intal_compare(numer, "0") == 0)
 		{
-			free(numer);
-			free(denom);
+			// free(numer);
+			// free(denom);
 			char *result = (char *)malloc(sizeof(char) * 2);
 			strcpy(result, "0\0");
 			return result;
@@ -595,18 +614,6 @@ char *intal_mod(const char *intal1, const char *intal2)
 	return numer;
 }
 
-static char *gcdHelper(char *temp1, char *temp2)
-{
-	if (strcmp(temp2, "0") == 0)
-	{
-		char *result = strdup(temp1);
-		return result;
-	}
-	char *mod, *temp;
-	mod = intal_mod(temp1, temp2);
-	temp = gcdHelper(temp2, mod);
-	return temp;
-}
 char *intal_gcd(const char *intal1, const char *intal2)
 {
 	if (strcmp("0", intal1) == 0 && strcmp("0", intal2) == 0)
