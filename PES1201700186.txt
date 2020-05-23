@@ -8,8 +8,7 @@ PES1201700186
 INTRODUCTION
 
 
-The problem statement was to create a library in the C programming language that aided in performing various mathematical operations on big numbers, called intals. Intal stands for integers, of arbitrary length. These big numbers are those that may not fit inside normal data types, and can be several hundreds of digits long. For the scope of this project, we have worked with intals of upto 1000 digits. An intal, as defined in the given problem statement, was a nonnegative integer of arbitrary length. The intal is stored as a null-terminated string of ASCII characters. Intals are stored in the big-endian style. Normal C integers contain negative numbers, but intals are non negative. 
-Intals help in working with large numbers across various problems.
+The problem statement was to create a library in the C programming language that aided in performing various mathematical operations on big numbers, called intals. Intal stands for integers, of arbitrary length. These big numbers are those that may not fit inside normal data types, and can be several hundreds of digits long. For the scope of this project, we have worked with intals of upto 1000 digits. An intal, as defined in the given problem statement, was a nonnegative integer of arbitrary length. The intal is stored as a null-terminated string of ASCII characters. Intals are stored in the big-endian style. Normal C integers contain negative numbers, but intals are non negative. Normal C integers are limited by a maximum memory capacity of 2 or 4 bytes, bolding numbers from -32,768 to 32,767 or -2,147,483,648 to 2,147,483,647. Intals help in working with large numbers across various problems.
 
 
 Approaching the Functions:
