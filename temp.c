@@ -1,42 +1,58 @@
-#include <stdio.h>
-
-int multiply(int x, int a[], int size)
+char *intal_mod(const char *intal1, const char *intal2)
 {
-	int carry = 0, i, p;
+	char *divident, *divisor, *t1, *t2;
+	divident = strdup(intal1);
 
-	for (i = 0; i < size; ++i)
+	int iter = 0; //value varies between 0 and 1
+
+	//run loop till divident is greater than divisor
+	while (intal_compare(divident, intal2) != -1)
 	{
-		p = a[i] * x + carry;
-		a[i] = p % 10;
-		carry = p / 10;
+
+		divisor = strdup(intal2);
+		//run loop till divisor is smaller than divident
+		while (intal_compare(divident, divisor) == 1)
+		{
+			t1 = intal_multiply(divisor, "2");
+			// printf("%s", t1);
+			t2 = divisor;
+			divisor = t1;
+			free(t2);
+		}
+		t1 = intal_diff(divisor, divident);
+		t2 = divident;
+		divident = t1;
+		// free(t2);
+
+		//if intal1 is a factor of intal2
+		if (intal_compare(divident, "0") == 0)
+		{
+			free(divident);
+			free(divisor);
+			char *res = (char *)malloc(sizeof(char) * 2);
+			res[0] = '0';
+			res[1] = '\0';
+			return res;
+		}
+
+		iter += 1;
+		iter %= 2;
 	}
 
-	while (carry != 0)
+	if (iter == 1)
 	{
-		a[size] = carry % 10;
-		carry = carry / 10;
-		size++;
-	}
-	return size;
-}
-
-int main()
-{
-	int n, a[100000], i, size = 1;
-	a[0] = 1;
-
-	printf("Enter any large number:");
-	scanf("%d", &n);
-
-	for (i = 2; i <= n; ++i)
-	{
-		size = multiply(i, a, size);
+		t1 = intal_diff(intal2, divident);
+		t2 = divident;
+		divident = t1;
+		// free(t2);
 	}
 
-	for (i = size - 1; i >= 0; --i)
-	{
-		printf("%d", a[i]);
-	}
+	t1 = stripZeros(divident);
+	t2 = divident;
+	divident = t1;
+	// free(t2);
 
-	return 0;
+	// free(divisor);
+
+	return divident;
 }
