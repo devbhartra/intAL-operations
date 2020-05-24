@@ -1,27 +1,30 @@
+// Dev Bhartra
+// APSSSE Mini Project
+// PES1201700186
+// PES University
+
+// C Library to perform operations on integers of Arbitrary length
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "intal.h"
-
-// Dev Bhartra
-// PES1201700186
 
 #define MAX(x, y) ((x > y) ? x : y)
 #define MIN(x, y) ((x < y) ? x : y)
 #define MAXIMUM 1001
 #define ISEVEN(n) ((n % 2 == 0) ? 1 : 0)
 
+// helper function two swap the values of 2 intals
+// static void swap(char *a, char *b)
+// {
+// 	char *temp = malloc(1000 * sizeof(char));
+// 	strcpy(temp, a);
+// 	strcpy(a, b);
+// 	strcpy(b, temp);
+// }
 
-static void swap(char *a, char *b)
-{
-
-	char *temp = malloc(1000 * sizeof(char));
-	strcpy(temp, a);
-	strcpy(a, b);
-	strcpy(b, temp);
-}
-
-// pads extra 0s and converts to int
+// pads extra 0s if required and converts to character array to integer array
 static int *char2int(const char *arr, int greater, int size)
 {
 	int *intArr;
@@ -37,6 +40,48 @@ static int *char2int(const char *arr, int greater, int size)
 	return intArr; // returns padded array in int form
 }
 
+// Convert the integer array to character array, in intal form
+static char *int2char(int *arr, int size)
+{
+	char *charArr;
+	charArr = (char *)malloc((size + 1) * sizeof(char *));
+	for (int i = 0; i < size; i++)
+	{
+		charArr[i] = arr[i] + '0';
+	}
+	charArr[size] = '\0';
+	return charArr;
+}
+
+// helper function to remove preceeding 0s
+static char *removePreZeroes(const char *tempArr)
+{
+	char *charArr = (char *)malloc(sizeof(char) * 1001);
+	strcpy(charArr, tempArr);
+	int count = 0;
+	for (int i = 0; i < strlen(charArr); i++)
+	{
+		if (charArr[i] == '0')
+		{
+			count += 1;
+		}
+		else
+			break;
+	}
+	if (count == strlen(charArr))
+	{
+		strcpy(charArr, "0");
+	}
+	else
+	{
+		charArr += count;
+	}
+
+	return charArr;
+}
+
+// helper function to help with GCD
+// Implements Euclidean Algorithm for GCD
 static char *gcdHelper(char *temp1, char *temp2)
 {
 	if (strcmp(temp2, "0") == 0)
@@ -50,6 +95,7 @@ static char *gcdHelper(char *temp1, char *temp2)
 	return temp;
 }
 
+// helper function to help with binary search
 static int binSearchHelp(char **arr, int l, int r, char *key)
 {
 	int temp = r - l + 1;
@@ -69,6 +115,7 @@ static int binSearchHelp(char **arr, int l, int r, char *key)
 		return binSearchHelp(arr, midElement + 1, r, key);
 }
 
+// static function to help with the Coin Row problem
 static char *coinHelper(char **inputArr, char **tableArr, int n)
 {
 	char *temporary, *currentNumber, *prevNum;
@@ -92,44 +139,36 @@ static char *coinHelper(char **inputArr, char **tableArr, int n)
 	{
 		tableArr[n] = prevNum;
 	}
+	// free(temporary);
+	// free(currentNumber);
+	// free(prevNum);
 	return tableArr[n];
 }
 
-static char *int2char(int *arr, int size)
+// helper function needed for factorial
+static int product(int num, int *resultant, int size)
 {
-	char *charArr;
-	charArr = (char *)malloc((size + 1) * sizeof(char *));
+	int carryOver = 0;
 	for (int i = 0; i < size; i++)
 	{
-		charArr[i] = arr[i] + '0';
-	}
-	charArr[size] = '\0';
-	return charArr;
-}
-
-// needed for factorial
-static int product(int x, int *resultant, int size)
-{
-	int carry = 0;
-	for (int i = 0; i < size; i++)
-	{
-		int prod = (resultant[i] * x);
-		int digit = prod + carry;
+		int prod = (resultant[i] * num);
+		int digit = prod + carryOver;
 		resultant[i] = digit % 10;
-		carry = digit / 10;
+		carryOver = digit / 10;
+		// free(digit)
+		// free(carryOver);
 	}
-
-	while (carry > 0)
+	// if leftover Carry is still present:
+	while (carryOver > 0)
 	{
-		resultant[size] = carry % 10;
-		carry = carry / 10;
+		resultant[size] = carryOver % 10;
+		carryOver = carryOver / 10;
 		size++;
 	}
-
 	return size;
 }
 
-// needed for intal sort
+// helper function needed for intal sort, implements the logic of finding the partitioning element in quickSort
 static int partition(char **arr, int l, int r)
 {
 	char *midElement = malloc(10001);
@@ -145,7 +184,7 @@ static int partition(char **arr, int l, int r)
 			strcpy(temp, arr[i]);
 			strcpy(arr[i], arr[j]);
 			strcpy(arr[j], temp);
-			free(temp);
+			// free(temp);
 		}
 	}
 	char *temp2 = malloc(10001);
@@ -160,7 +199,7 @@ static int partition(char **arr, int l, int r)
 	return (i);
 }
 
-// needed for intal sort
+// helper function needed for intal sort, implements the recursive quickSort logic
 static void qSorting(char **arr, int l, int r)
 {
 	if (l < r)
@@ -171,6 +210,8 @@ static void qSorting(char **arr, int l, int r)
 	}
 }
 
+// main function, to add two intals
+// returns a char array
 char *intal_add(const char *intal1, const char *intal2)
 {
 
@@ -186,6 +227,7 @@ char *intal_add(const char *intal1, const char *intal2)
 
 	// both char intals are now int arrays
 
+	// array to store the final  sum
 	int *sumArr;
 	sumArr = (int *)calloc((greater + 1), sizeof(int *));
 
@@ -206,6 +248,7 @@ char *intal_add(const char *intal1, const char *intal2)
 
 	char *charArr = (char *)malloc(greater * sizeof(char *));
 	charArr = int2char(sumArr, greater + 1);
+	// removing the extra preceeding 0s
 	if (charArr[0] == '0')
 	{
 		charArr += 1;
@@ -213,13 +256,15 @@ char *intal_add(const char *intal1, const char *intal2)
 
 	char *result = (char *)malloc((greater + 1) * sizeof(char *));
 	strcpy(result, charArr);
-
+	// free charArr
 	free(intArr1);
 	free(intArr2);
 	free(sumArr);
 	return result;
 }
 
+// main function, to compare two input intal values.
+// returns, -1, +1 or zero
 int intal_compare(const char *intal1, const char *intal2)
 {
 	int size1 = strlen(intal1);
@@ -231,22 +276,24 @@ int intal_compare(const char *intal1, const char *intal2)
 	intArr1 = char2int(intal1, greater, size1);
 	int *intArr2;
 	intArr2 = char2int(intal2, greater, size2);
+
 	// both char intals are now int arrays
+
 	int flag = 0;
 	for (int i = 0; i < greater; i++)
 	{
 		if (intArr1[i] == intArr2[i])
 		{
-			continue;
+			continue; // both current values in the numbers are equal
 		}
 		else if (intArr1[i] > intArr2[i])
 		{
-			flag = 1;
+			flag = 1; // intal1 > intal2
 			break;
 		}
 		else
 		{
-			flag = -1;
+			flag = -1; // intal2 > intal1
 			break;
 		}
 	}
@@ -255,6 +302,8 @@ int intal_compare(const char *intal1, const char *intal2)
 	return flag;
 }
 
+// main function to find the difference between two intals
+// returns a character array
 char *intal_diff(const char *intal1, const char *intal2)
 {
 	int size1 = strlen(intal1);
@@ -268,6 +317,7 @@ char *intal_diff(const char *intal1, const char *intal2)
 
 	// both char intals are now int arrays
 
+	// temp array to store the difference
 	int *diffArr;
 	diffArr = (int *)calloc((greater), sizeof(int)); // need to strip
 
@@ -276,7 +326,7 @@ char *intal_diff(const char *intal1, const char *intal2)
 
 	// find bigger number:
 	int comp = intal_compare(intal1, intal2);
-
+	// intal1 > intal2
 	if (comp == 1)
 	{
 		for (int i = greater - 1; i >= 0; i--)
@@ -316,6 +366,8 @@ char *intal_diff(const char *intal1, const char *intal2)
 	charArr = int2char(diffArr, greater);
 	// free(diffArr);
 	int count = 0;
+
+	// removing extra 0s from the front
 	for (int i = 0; i < strlen(charArr); i++)
 	{
 		if (charArr[i] == '0')
@@ -329,6 +381,8 @@ char *intal_diff(const char *intal1, const char *intal2)
 	{
 		strcpy(charArr, "0");
 	}
+
+	// move char pointer up by thre number of 0s present in the front
 	else
 	{
 		charArr += count;
@@ -340,8 +394,11 @@ char *intal_diff(const char *intal1, const char *intal2)
 	return charArr;
 }
 
+// main function to multiply 2 intals
+// returns a char array
 char *intal_multiply(const char *intal1, const char *intal2)
 {
+	// if any of the inputs is a 0, return 0
 	if (strcmp("0", intal2) == 0 || strcmp("0", intal1) == 0)
 	{
 		char *result = (char *)malloc(sizeof(char) * 2);
@@ -350,13 +407,24 @@ char *intal_multiply(const char *intal1, const char *intal2)
 	}
 	int size1 = strlen(intal1);
 	int size2 = strlen(intal2);
+
+	// max possible length of the product
 	int len = size1 + size2;
-	int *arr = (int *)malloc(sizeof(int) * len); 
+
+	// temporary array to store the product
+	int *arr = (int *)malloc(sizeof(int) * len);
+	// int *arr = (int *)calloc(sizeof(int) , len);
 	memset(arr, 0, sizeof(int) * len);
+
 	for (int i = size1 - 1; i > -1; i--)
+	{
 		for (int j = size2 - 1; j > -1; j--)
-			arr[i + j + 1] += (intal1[i] - '0') * (intal2[j] - '0'); 
-	for (int i = len - 1; i > 0; i--)								
+		{
+			// actual number by number multiplication
+			arr[i + j + 1] += (intal1[i] - '0') * (intal2[j] - '0');
+		}
+	}
+	for (int i = len - 1; i > 0; i--)
 	{
 		arr[i - 1] += arr[i] / 10;
 		arr[i] %= 10;
@@ -364,18 +432,22 @@ char *intal_multiply(const char *intal1, const char *intal2)
 	char *s = (char *)malloc(sizeof(char) * (len + 1));
 	int index = 0;
 	int i = 0;
-	if (arr[i] == 0)
-		i++; 
-	while (i < len)
+	if (arr[i] == 0){
+		i++;
+	}
+	while (i < len){
 		s[index++] = arr[i++] + '0';
+	}
 	s[index] = '\0';
 
 	free(arr);
 	return s;
 }
 
+// main function to calculate intal1^intal2
 char *intal_pow(const char *intal1, unsigned int n)
 {
+	// anything to the power 0 = 1
 	if (n == 0)
 	{
 		char *resArr = (char *)malloc(1 * sizeof(char));
@@ -383,6 +455,8 @@ char *intal_pow(const char *intal1, unsigned int n)
 		return resArr;
 	}
 	char *temp, *resArr;
+
+	// recursive algorithm
 	temp = intal_pow(intal1, n / 2);
 	if (n % 2 == 0)
 	{
@@ -401,6 +475,8 @@ char *intal_pow(const char *intal1, unsigned int n)
 	}
 }
 
+// main function to find offset of max intal in an array of intals
+// returns an int index value
 int intal_max(char **arr, int n)
 {
 	char *max = (char *)malloc(MAXIMUM * sizeof(char));
@@ -410,16 +486,19 @@ int intal_max(char **arr, int n)
 	// start loop from next element
 	for (int i = 1; i < n; i++)
 	{
+		// the number is greater, need to swap
 		if (intal_compare(arr[i], max) == 1)
 		{
 			strcpy(max, arr[i]);
 			pos = i;
-		} // the number is greater, need to swap
+		}
 	}
 	free(max);
 	return pos;
 }
 
+// main funtion to find offset of min intal in an array of intals
+// returns an int index value
 int intal_min(char **arr, int n)
 {
 	char *min = (char *)malloc(MAXIMUM * sizeof(char));
@@ -429,16 +508,18 @@ int intal_min(char **arr, int n)
 	// start loop from next element
 	for (int i = 1; i < n; i++)
 	{
+		// the number is lesser, need to swap
 		if (intal_compare(arr[i], min) == -1)
 		{
 			strcpy(min, arr[i]);
 			pos = i;
-		} // the number is greater, need to swap
+		}
 	}
 	free(min);
 	return pos;
 }
 
+// main function to search for intal in an array. Implements linear  search
 int intal_search(char **arr, int n, const char *key)
 {
 	int pos = -1;
@@ -446,6 +527,7 @@ int intal_search(char **arr, int n, const char *key)
 	strcpy(intalKey, key);
 	for (int i = 0; i < n; i++)
 	{
+		// element found
 		if (intal_compare(intalKey, arr[i]) == 0)
 		{
 			pos = i;
@@ -456,8 +538,10 @@ int intal_search(char **arr, int n, const char *key)
 	return pos;
 }
 
+// main function to calculate factorial of a number. Can calculate uptil values exceeding 7000, in miliseconds
 char *intal_factorial(unsigned int n)
 {
+	// base case, 0! and 1! = 1
 	if (n == 0 || n == 1)
 	{
 		char *temp = (char *)calloc(sizeof(char), 1);
@@ -483,6 +567,7 @@ char *intal_factorial(unsigned int n)
 	return result;
 }
 
+// main function to perform binary search. Returns -1 or 1 if not found or found, respectively
 int intal_binsearch(char **arr, int n, const char *key)
 {
 	char *charArr = (char *)malloc(sizeof(char) * 1001);
@@ -493,12 +578,14 @@ int intal_binsearch(char **arr, int n, const char *key)
 	return result;
 }
 
+// main function to perform quickSort on an array of intals
 void intal_sort(char **arr, int n)
 {
 	qSorting(arr, 0, n - 1);
 }
 
-
+// main function to solve the coin row problem, in a n array of intals
+// The goal is to pick up the maximum amount of money subject to the constraint that no two coins adjacent in the initial row can be picked up.
 char *coin_row_problem(char **arr, int n)
 {
 	char **tableArr = (char **)malloc(sizeof(char *) * n);
@@ -512,6 +599,7 @@ char *coin_row_problem(char **arr, int n)
 	return res;
 }
 
+// main function to calculate the nth fiboncacci number. Faster than brute force. Store only the n-1th and n-2nd values in each iteration for space efficiency
 char *intal_fibonacci(unsigned int n)
 {
 	char *a = (char *)malloc(sizeof(char) * 2);
@@ -541,32 +629,7 @@ char *intal_fibonacci(unsigned int n)
 	return res;
 }
 
-static char *removePreZeroes(const char *tempArr)
-{
-	char *charArr = (char *)malloc(sizeof(char) * 1001);
-	strcpy(charArr, tempArr);
-	int count = 0;
-	for (int i = 0; i < strlen(charArr); i++)
-	{
-		if (charArr[i] == '0')
-		{
-			count += 1;
-		}
-		else
-			break;
-	}
-	if (count == strlen(charArr))
-	{
-		strcpy(charArr, "0");
-	}
-	else
-	{
-		charArr += count;
-	}
-
-	return charArr;
-}
-
+// main function to calculate intal1 mod intal2
 char *intal_mod(const char *intal1, const char *intal2)
 {
 	char *numer, *denom;
@@ -614,8 +677,10 @@ char *intal_mod(const char *intal1, const char *intal2)
 	return numer;
 }
 
+// main function to calculate gcd of 2 intals. Applies the euclidean logic of recursion
 char *intal_gcd(const char *intal1, const char *intal2)
 {
+	// border case when both intals are 0
 	if (strcmp("0", intal1) == 0 && strcmp("0", intal2) == 0)
 	{
 		char *result = (char *)malloc(sizeof(char) * 2);
@@ -637,6 +702,7 @@ char *intal_gcd(const char *intal1, const char *intal2)
 	}
 }
 
+// main function to calculate the binomial coefficient for nCk
 char *intal_bincoeff(unsigned int n, unsigned int k)
 {
 	// reducing complexity using a standard identity
@@ -651,6 +717,7 @@ char *intal_bincoeff(unsigned int n, unsigned int k)
 		strcpy(table[i], "0");
 		// memset(table[i],"0", sizeof(table[i]));
 	}
+	// 1st value in each row of Pascals triangle is 1
 	strcpy(table[0], "1");
 
 	char *result;
