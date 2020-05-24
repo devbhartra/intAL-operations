@@ -432,10 +432,12 @@ char *intal_multiply(const char *intal1, const char *intal2)
 	char *s = (char *)malloc(sizeof(char) * (len + 1));
 	int index = 0;
 	int i = 0;
-	if (arr[i] == 0){
+	if (arr[i] == 0)
+	{
 		i++;
 	}
-	while (i < len){
+	while (i < len)
+	{
 		s[index++] = arr[i++] + '0';
 	}
 	s[index] = '\0';
@@ -570,6 +572,17 @@ char *intal_factorial(unsigned int n)
 // main function to perform binary search. Returns -1 or 1 if not found or found, respectively
 int intal_binsearch(char **arr, int n, const char *key)
 {
+	if (n == 1)
+	{
+		if (intal_compare(arr[0], key) == 0)
+		{
+			return 1;
+		}
+		else
+		{
+			return -1;
+		}
+	}
 	char *charArr = (char *)malloc(sizeof(char) * 1001);
 	strcpy(charArr, key);
 	int result = -1;
@@ -588,6 +601,27 @@ void intal_sort(char **arr, int n)
 // The goal is to pick up the maximum amount of money subject to the constraint that no two coins adjacent in the initial row can be picked up.
 char *coin_row_problem(char **arr, int n)
 {
+	if (n == 1)
+	{
+		char *temp = (char *)malloc(sizeof(char) * 1);
+		strcpy(temp, arr[0]);
+		return temp;
+	}
+	if (n == 2)
+	{
+		char *temp = (char *)malloc(sizeof(char) * 1);
+		int status = intal_compare(arr[0], arr[1]);
+		if (status == 1 || status == 0)
+		{
+			strcpy(temp, arr[0]);
+			return temp;
+		}
+		else
+		{
+			strcpy(temp, arr[1]);
+			return temp;
+		}
+	}
 	char **tableArr = (char **)malloc(sizeof(char *) * n);
 	for (int i = 0; i < n; i++)
 	{

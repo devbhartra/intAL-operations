@@ -3,15 +3,13 @@
 #include <string.h>
 #include "intal.h"
 
-int main(int argc, char const *argv[])
-{
+int main(int argc, char const *argv[]) {
 	int n = 12;
-	char **a = (char **)malloc(n * sizeof(char *));
-	for (int i = 0; i < n; i++)
-	{
-		a[i] = (char *)malloc(1001 * sizeof(char));
+	char **a = (char**) malloc(n * sizeof(char*));
+	for(int i = 0; i < n; i++) {
+		a[i] = (char*) malloc(1001 * sizeof(char));
 	}
-
+	
 	strcpy(a[0], "1234512345123451234512345");
 	strcpy(a[1], "543215432154321543215432154321");
 	strcpy(a[2], "0");
@@ -28,373 +26,253 @@ int main(int argc, char const *argv[])
 	int index1;
 
 	result1 = intal_add(a[0], a[1]);
-	if (!result1)
-	{
+	if(!result1) {
 		printf("Test intal_add FAILED.\n");
-	}
-	else
-	{
-		if (0 == strcmp(result1, "543216666666666666666666666666"))
-		{
+	} else {
+		if(0 == strcmp(result1, "543216666666666666666666666666")) {
 			printf("Test intal_add PASSED\n");
-		}
-		else
-		{
+		} else {
 			printf("Test intal_add FAILED.\nYour answer: %s\nExpected answer: %s\n", result1, "543216666666666666666666666666");
 		}
 		free(result1);
 	}
 
 	index1 = intal_compare(a[0], a[1]);
-	if (-1 == index1)
-	{
+	if(-1 == index1) {
 		printf("Test intal_compare PASSED\n");
-	}
-	else
-	{
+	} else {
 		printf("Test intal_compare FAILED.\nYour answer: %d\nExpected answer: %d\n", index1, -1);
 	}
 
 	result1 = intal_diff(a[0], a[1]);
-	if (!result1)
-	{
+	if(!result1) {
 		printf("Test intal_diff FAILED.\n");
-	}
-	else
-	{
-		if (0 == strcmp(result1, "543214197641976419764197641976"))
-		{
+	} else {
+		if(0 == strcmp(result1, "543214197641976419764197641976")) {
 			printf("Test intal_diff PASSED\n");
-		}
-		else
-		{
+		} else {
 			printf("Test intal_diff FAILED.\nYour answer: %s\nExpected answer: %s\n", result1, "543214197641976419764197641976");
 		}
 		free(result1);
 	}
 
 	result1 = intal_multiply(a[8], a[5]);
-	if (!result1)
-	{
+	if(!result1) {
 		printf("Test intal_multiply FAILED.\n");
-	}
-	else
-	{
-		if (0 == strcmp(result1, "65185851858518585185851852"))
-		{
+	} else {
+		if(0 == strcmp(result1, "65185851858518585185851852")) {
 			printf("Test intal_multiply PASSED\n");
-		}
-		else
-		{
+		} else {
 			printf("Test intal_multiply FAILED.\n.Your answer: %s\nExpected answer: %s\n", result1, "65185851858518585185851852");
 		}
 		free(result1);
 	}
 
 	result1 = intal_mod(a[3], a[4]);
-	if (!result1)
-	{
+	if(!result1) {
 		printf("Test intal_mod FAILED.\n");
-	}
-	else
-	{
-		if (0 == strcmp(result1, "1"))
-		{
+	} else {
+		if(0 == strcmp(result1, "1")) {
 			printf("Test intal_mod PASSED\n");
-		}
-		else
-		{
+		} else {
 			printf("Test intal_mod FAILED.\nYour answer: %s\nExpected answer: %s\n", result1, "1");
 		}
 		free(result1);
 	}
 
 	result1 = intal_mod("978", "5");
-	if (!result1)
-	{
+	if(!result1) {
 		printf("Test intal_mod FAILED.\n");
-	}
-	else
-	{
-		if (0 == strcmp(result1, "3"))
-		{
+	} else {
+		if(0 == strcmp(result1, "3")) {
 			printf("Test intal_mod PASSED\n");
-		}
-		else
-		{
+		} else {
 			printf("Test intal_mod FAILED.\nYour answer: %s\nExpected answer: %s\n", result1, "3");
 		}
 		free(result1);
 	}
 
 	result1 = intal_mod(a[0], a[5]);
-	if (!result1)
-	{
+	if(!result1) {
 		printf("Test intal_mod FAILED.\n");
-	}
-	else
-	{
-		if (0 == strcmp(result1, "9"))
-		{
+	} else {
+		if(0 == strcmp(result1, "9")) {
 			printf("Test intal_mod PASSED\n");
-		}
-		else
-		{
+		} else {
 			printf("Test intal_mod FAILED.\nYour answer: %s\nExpected answer: %s\n", result1, "9");
 		}
 		free(result1);
 	}
 
 	result1 = intal_pow(a[5], 3);
-	// printf("\n%d <----\n", strlen(result1));
-	if (!result1)
-	{
+	if(!result1) {
 		printf("Test intal_pow FAILED.\n");
-	}
-	else
-	{
-		if (0 == strcmp(result1, "1728"))
-		{
+	} else {
+		if(0 == strcmp(result1, "1728")) {
 			printf("Test intal_pow PASSED\n");
-		}
-		else
-		{
+		} else {
 			printf("Test intal_pow FAILED.\nYour answer: %s\nExpected answer: %s\n", result1, "1728");
 		}
 		free(result1);
 	}
 
 	result1 = intal_pow("10", 999);
-	if (!result1)
-	{
+	if(!result1) {
 		printf("Test intal_pow FAILED.\n");
-	}
-	else
-	{
-		if (0 == strcmp(result1, a[10]))
-		{
+	} else {
+		if(0 == strcmp(result1, a[10])) {
 			printf("Test intal_pow PASSED\n");
-		}
-		else
-		{
+		} else {
 			printf("Test intal_pow FAILED.\nYour answer: %s\nExpected answer: %s\n", result1, a[10]);
 		}
 		free(result1);
 	}
 
 	result1 = intal_pow("2", 3000);
-	if (!result1)
-	{
+	if(!result1) {
 		printf("Test intal_pow FAILED.\n");
-	}
-	else
-	{
-		if (0 == strcmp(result1, a[11]))
-		{
+	} else {
+		if(0 == strcmp(result1, a[11])) {
 			printf("Test intal_pow PASSED\n");
-		}
-		else
-		{
+		} else {
 			printf("Test intal_pow FAILED.\nYour answer: %s\nExpected answer: %s\n", result1, a[11]);
 		}
 		free(result1);
 	}
 
 	result1 = intal_gcd(a[0], a[5]);
-	if (!result1)
-	{
+	if(!result1) {
 		printf("Test intal_gcd FAILED.\n");
-	}
-	else
-	{
-		if (0 == strcmp(result1, "3"))
-		{
+	} else {
+		if(0 == strcmp(result1, "3")) {
 			printf("Test intal_gcd PASSED\n");
-		}
-		else
-		{
+		} else {
 			printf("Test intal_gcd FAILED.\nYour answer: %s\nExpected answer: %s\n", result1, "3");
 		}
 		free(result1);
 	}
 
 	result1 = intal_fibonacci(3);
-	if (!result1)
-	{
+	if(!result1) {
 		printf("Test intal_fibonacci FAILED.\n");
-	}
-	else
-	{
-		if (0 == strcmp(result1, "2"))
-		{
+	} else {
+		if(0 == strcmp(result1, "2")) {
 			printf("Test intal_fibonacci PASSED\n");
-		}
-		else
-		{
+		} else {
 			printf("Test intal_fibonacci FAILED.\nYour answer: %s\nExpected answer: %s\n", result1, "2");
 		}
 		free(result1);
 	}
 
 	result1 = intal_fibonacci(1000);
-	if (!result1)
-	{
+	if(!result1) {
 		printf("Test intal_fibonacci FAILED.\n");
-	}
-	else
-	{
-		if (0 == strcmp(result1, "43466557686937456435688527675040625802564660517371780402481729089536555417949051890403879840079255169295922593080322634775209689623239873322471161642996440906533187938298969649928516003704476137795166849228875"))
-		{
+	} else {
+		if(0 == strcmp(result1, "43466557686937456435688527675040625802564660517371780402481729089536555417949051890403879840079255169295922593080322634775209689623239873322471161642996440906533187938298969649928516003704476137795166849228875")) {
 			printf("Test intal_fibonacci PASSED\n");
-		}
-		else
-		{
+		} else {
 			printf("Test intal_fibonacci FAILED.\nYour answer: %s\nExpected answer: %s\n", result1, "43466557686937456435688527675040625802564660517371780402481729089536555417949051890403879840079255169295922593080322634775209689623239873322471161642996440906533187938298969649928516003704476137795166849228875");
 		}
 		free(result1);
 	}
 
 	result1 = intal_factorial(30);
-	if (!result1)
-	{
+	if(!result1) {
 		printf("Test intal_factorial FAILED.\n");
-	}
-	else
-	{
-		if (0 == strcmp(result1, a[6]))
-		{
+	} else {
+		if(0 == strcmp(result1, a[6])) {
 			printf("Test intal_factorial PASSED\n");
-		}
-		else
-		{
+		} else {
 			printf("Test intal_factorial FAILED.\nYour answer: %s\nExpected answer: %s\n", result1, a[6]);
 		}
 		free(result1);
 	}
 
 	result1 = intal_factorial(100);
-	if (!result1)
-	{
+	if(!result1) {
 		printf("Test intal_factorial FAILED.\n");
-	}
-	else
-	{
-		if (0 == strcmp(result1, "93326215443944152681699238856266700490715968264381621468592963895217599993229915608941463976156518286253697920827223758251185210916864000000000000000000000000"))
-		{
+	} else {
+		if(0 == strcmp(result1, "93326215443944152681699238856266700490715968264381621468592963895217599993229915608941463976156518286253697920827223758251185210916864000000000000000000000000")) {
 			printf("Test intal_factorial PASSED\n");
-		}
-		else
-		{
+		} else {
 			printf("Test intal_factorial FAILED.\nYour answer: %s\nExpected answer: %s\n", result1, "93326215443944152681699238856266700490715968264381621468592963895217599993229915608941463976156518286253697920827223758251185210916864000000000000000000000000");
 		}
 		free(result1);
 	}
 
 	result1 = intal_bincoeff(10, 8);
-	if (!result1)
-	{
+	if(!result1) {
 		printf("Test intal_bincoeff FAILED.\n");
-	}
-	else
-	{
-		if (0 == strcmp(result1, "45"))
-		{
+	} else {
+		if(0 == strcmp(result1, "45")) {
 			printf("Test intal_bincoeff PASSED\n");
-		}
-		else
-		{
+		} else {
 			printf("Test intal_bincoeff FAILED.\nYour answer: %s\nExpected answer: %s\n", result1, "45");
 		}
 		free(result1);
 	}
 
 	result1 = intal_bincoeff(1000, 900);
-	if (!result1)
-	{
+	if(!result1) {
 		printf("Test intal_bincoeff FAILED.\n");
-	}
-	else
-	{
-		if (0 == strcmp(result1, "63850511926305130236698511142022274281262900693853331776286816221524376994750901948920974351797699894319420811933446197797592213357065053890"))
-		{
+	} else {
+		if(0 == strcmp(result1, "63850511926305130236698511142022274281262900693853331776286816221524376994750901948920974351797699894319420811933446197797592213357065053890")) {
 			printf("Test intal_bincoeff PASSED\n");
-		}
-		else
-		{
+		} else {
 			printf("Test intal_bincoeff FAILED.\nYour answer: %s\nExpected answer: %s\n", result1, "63850511926305130236698511142022274281262900693853331776286816221524376994750901948920974351797699894319420811933446197797592213357065053890");
 		}
 		free(result1);
 	}
 
 	index1 = intal_max(a, n);
-	if (10 == index1)
-	{
+	if(10 == index1) {
 		printf("Test intal_max PASSED\n");
-	}
-	else
-	{
+	} else {
 		printf("Test intal_max FAILED.\nYour answer: %d\nExpected answer: %d\n", index1, 6);
 	}
 
 	index1 = intal_min(a, n);
-	if (2 == index1)
-	{
+	if(2 == index1) {
 		printf("Test intal_min PASSED\n");
-	}
-	else
-	{
+	} else {
 		printf("Test intal_min FAILED.\nYour answer: %d\nExpected answer: %d\n", index1, 2);
 	}
 
 	index1 = intal_search(a, n, a[7]);
-	if (6 == index1)
-	{
+	if(6 == index1) {
 		printf("Test intal_search PASSED\n");
-	}
-	else
-	{
+	} else {
 		printf("Test intal_search FAILED.\nYour answer: %d\nExpected answer: %d\n", index1, 6);
 	}
 
 	result1 = coin_row_problem(a, n);
-	if (!result1)
-	{
+	if(!result1) {
 		printf("Test coin_row_problem FAILED.\n");
-	}
-	else
-	{
-		if (0 == strcmp("1000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000265796081911012046846190578820987", result1))
-		{
+	} else {
+		if(0 == strcmp("1000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000265796081911012046846190578820987", result1)) {
 			printf("Test coin_row_problem PASSED\n");
-		}
-		else
-		{
+		} else {
 			printf("Test coin_row_problem FAILED.\nYour answer: %s\nExpected answer: %s\n", result1, "1000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000265796081911012046846190578820987");
 		}
 		free(result1);
 	}
-
+	
 	intal_sort(a, n);
 	printf("\nTest intal_sort PASSED only if the following sequence of %d intals are sorted in nondecreasing order.\n", n);
-	for (int i = 0; i < n; i++)
-	{
+	for (int i = 0; i < n; i++) {
 		printf("%s\n", a[i]);
 	}
 	printf("\n");
 
 	index1 = intal_binsearch(a, n, "3");
-	if (1 == index1)
-	{
+	if(1 == index1) {
 		printf("Test intal_binsearch and probably intal_sort PASSED\n");
-	}
-	else
-	{
+	} else {
 		printf("Test intal_binsearch and probably intal_sort FAILED.\nYour answer: %d\nExpected answer: %d\n", index1, 1);
 	}
 
 	// Don't forget to free all the memory that is dynamically allocated.
-	for (int i = 0; i < n; i++)
-	{
+	for(int i = 0; i < n; i++) {
 		free(a[i]);
 	}
 	free(a);
